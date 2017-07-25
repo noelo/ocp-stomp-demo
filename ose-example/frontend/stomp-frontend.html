@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebSockets - Simple chat</title>
+
+        <style>
+        * { font-family:tahoma; font-size:12px; padding:0px; margin:0px; }
+        p { line-height:18px; }
+        div { width:500px; margin-left:auto; margin-right:auto;}
+        #content { padding:5px; background:#ddd; border-radius:5px; overflow-y: scroll;
+                   border:1px solid #CCC; margin-top:10px; height: 160px; }
+        #input { border-radius:2px; border:1px solid #ccc;
+                 margin-top:10px; padding:5px; width:400px;  }
+        #status { width:88px; display:block; float:left; margin-top:15px; }
+        </style>
+    </head>
+    <body>
+
+        <script src="stomp.js"></script>
+<script type="text/javascript">
+ var client = Stomp.client( "ws://localhost:61614/stomp", "v11.stomp" );
+ var headers = {
+  login: 'admin',
+  passcode: 'admin',
+  // additional header
+  'client-id': 'my-client-id'
+};
+ client.connect( headers, function() {
+    //   client.subscribe("noctest",
+    //    function( message ) {
+    //        alert( message );
+    //       },
+    // { priority: 9 }
+    //   );
+   client.send("/queue/noctestQ", { priority: 9,persistent:'true' }, "Queue over STOMP!");
+   client.send("/topic/noctestT", { priority: 9,persistent:'true' }, "Topic over STOMP!");
+  }
+ );
+</script>
+    </body>
+</html>

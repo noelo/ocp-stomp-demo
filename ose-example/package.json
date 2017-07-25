@@ -1,0 +1,35 @@
+{
+  "name": "websocket-example",
+  "version": "0.0.1",
+  "description": "Node.js websocket sample app for OpenShift 3",
+  "main": "server.js",
+  "dependencies": {
+    "stompjs": "^2.3.3",
+    "websocket": "^1.0.24"
+  },
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
+  "scripts": {
+    "start": "node chat-server.js",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/openshift/nodejs-ex.git"
+  },
+  "author": "Noel O'Connor <noel.oconnor@gmail.com>",
+  "contributors": {
+    "name": "Martin Sikora",
+    "email": "dunno",
+    "url": "https://medium.com/@martin.sikora/node-js-websocket-simple-chat-tutorial-2def3a841b61",
+    "originalsource": "https://gist.github.com/martinsik/2031681",
+    "comment": "all this repo is based on the work done by Martin Sikora not me, I've just got it working in OCP"
+  },
+  "license": "CC-BY-1.0",
+  "bugs": {
+    "url": "http://github.com/openshift/nodejs-ex/issues"
+  },
+  "homepage": "http://github.com/openshift/nodejs-ex"
+}
