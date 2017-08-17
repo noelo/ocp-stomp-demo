@@ -70,30 +70,32 @@ $ oc secrets new broker-secret broker.ks client.ts
 ### Openshift based broker
 
 ```
-$ oc create serviceaccount amq-sa
-serviceaccount "amq-sa" created
+$ oc create serviceaccount amq-service-account
+serviceaccount "amq-service-account" created
 
-$ oc policy add-role-to-user view system:serviceaccount:amq-stomp:amq-sa
-role "view" added: "system:serviceaccount:amq-stomp:amq-sa"
+$ oc policy add-role-to-user view system:serviceaccount:`oc project -q`:amq-service-account
+role "view" added: "system:serviceaccount:amq-stomp:amq-service-account"
 
 $ oc secrets new broker-secret broker.ks client.ts
 secret/broker-secret
-$ oc secrets add sa/amq-sa secret/broker-secret
+$ oc secrets add sa/amq-service-account secret/broker-secret
 ```
 
 ### Creating the broker (non-persistent)
 ```
-oc process -n openshift amq63-ssl \
+oc process -n openshift amq62-persistent-ssl \
+-p VOLUME_CAPACITY=1Gi \
+-p AMQ_SPLIT=true \
 -p MQ_USERNAME=admin \
 -p MQ_PASSWORD=admin \
--p MQ_PROTOCOL=stomp,amqp \
+-p MQ_PROTOCOL=stomp,amqp,openwire \
 -p MQ_QUEUES=noctestQ \
 -p MQ_TOPICS=noctestT \
 -p AMQ_SECRET=broker-secret \
 -p AMQ_TRUSTSTORE=client.ts \
 -p AMQ_KEYSTORE=broker.ks \
 -p AMQ_TRUSTSTORE_PASSWORD=changeit \
--p AMQ_KEYSTORE_PASSWORD=changeit
+-p AMQ_KEYSTORE_PASSWORD=changeit | oc create -f-
 ```
 
 
